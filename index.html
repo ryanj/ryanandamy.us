@@ -82,23 +82,27 @@
       app.page_init = function() {
         var map = L.map('map').setView([37.859853, -122.230604], 12);
         app.map = map;
-        app.popups = [];
+        app.markers = [];
 
         L.tileLayer('http://{s}.tile.cloudmade.com/99c230b812b04b4a83492f7282a90227/71227/256/{z}/{x}/{y}.png', {
         	maxZoom: 18,
         	attribution: ''
         }).addTo(map);
 
-        app.popups[3] = L.marker([37.841682,-122.293131]).addTo(map)
+        app.markers[3] = L.marker([37.841682,-122.293131])
+        app.markers[3].addTo(map)
         	.bindPopup("<p><a href='https://maps.google.com/maps?q=Hyatt+House+Emeryville&hl=en&ll=37.848561,-122.292509&spn=0.040801,0.059395&sll=37.841682,-122.293131&sspn=0.010201,0.014849&t=h&gl=US&hq=HYATT+house+Emeryville&z=15&iwloc=A&f=d'><h5>The Hyatt House</h5><img src='images/hyatt-house.png'/><br/>5800 Shellmound Way<br/>Emeryville, California 94608</a><br/><a href='https://maps.google.com/maps?saddr=Hyatt+House+Emeryville&daddr=Piedmont+Community+Hall,+711+Highland+Avenue,+Oakland,+CA+94611&hl=en&ll=37.832158,-122.265472&spn=0.081619,0.11879&sll=37.841682,-122.293131&sspn=0.010201,0.014849&t=m&gl=US&hq=HYATT+house+Emeryville&z=13&geocode=FRtiQQIdoPO1-CFI7xm03tBOCSmHHLVUQ36FgDFI7xm03tBOCQ%3BFUklQQId7-i2-CHdyDF85cgK4ykLqrc5e4ePgDHdyDF85cgK4w'><i>Directions to venue&rarr;</i></a><a</p>");
 
-        app.popups[2] = L.marker([37.840411,-122.29841]).addTo(map)
+        app.markers[2] = L.marker([37.840411,-122.29841])
+        app.markers[2].addTo(map)
         	.bindPopup("<p><a href='https://maps.google.com/maps?ie=UTF8&cid=1619372857147661514&q=Hilton+Garden+Inn+1800+Powell+Street+Emeryville+CA+94608&iwloc=A&gl=US&hl=en&z=19&f=d'><h5>The Hilton Garden Inn</h5><img src='images/hilton-garden-inn.png'/><br/>1800 Powell Street<br/>Emeryville, California 94608</a><br/><a href='https://maps.google.com/maps?saddr=Hilton+Garden+Inn+1800+Powell+Street+Emeryville+CA+94608&daddr=Piedmont+Community+Hall,+711+Highland+Avenue,+Oakland,+CA+94611&hl=en&ll=37.828633,-122.266331&spn=0.081623,0.11879&cid=1619372857147661514&gl=US&t=m&z=13&geocode=FcldQQIdCd-1-CHKHDKlCCt5Fikl4SqxWn6FgDHKHDKlCCt5Fg%3BFUklQQId7-i2-CHdyDF85cgK4ykLqrc5e4ePgDHdyDF85cgK4w'><i>Directions to venue&rarr;</i></a></p>");
 
-        app.popups[1] = L.marker([37.834751,-122.293974]).addTo(map)
+        app.markers[1] = L.marker([37.834751,-122.293974])
+        app.markers[1].addTo(map)
         	.bindPopup("<p><a href='https://maps.google.com/maps?hl=en&ie=UTF-8&q=Courtyard+Oakland+Emeryville+5555+Shellmound+Street+%C2%B7+Emeryville,+California+94608+USA&fb=1&gl=us&hq=Courtyard+Oakland+Emeryville+5555+Shellmound+Street+%C2%B7+Emeryville,+California+94608+USA&hnear=Courtyard+Oakland+Emeryville+5555+Shellmound+Street+%C2%B7+Emeryville,+California+94608+USA&cid=0,0,8132115881282922372&ei=F1L4UPX3KJDMigKbq4DwBw&ved=0CKYBEPwSMAM&iwloc=A&f=d&z=19'><h5>The Courtyard Marriott Hotel</h5><img src='images/marriott-courtyard.png'/><br/>5555 Shellmound Street<br/>Emeryville, California 94608</a><br/><a href='https://maps.google.com/maps?saddr=Courtyard+Oakland+Emeryville,+5555+Shellmound+Street+%C2%B7+Emeryville,+California+94608+USA&daddr=Piedmont+Community+Hall,+711+Highland+Avenue,+Oakland,+CA+94611&hl=en&ie=UTF8&ll=37.834463,-122.262383&spn=0.081617,0.11879&fb=1&gl=us&hq=Courtyard+Oakland+Emeryville+5555+Shellmound+Street+%C2%B7+Emeryville,+California+94608+USA&hnear=Courtyard+Oakland+Emeryville+5555+Shellmound+Street+%C2%B7+Emeryville,+California+94608+USA&cid=0,0,8132115881282922372&t=m&z=13&geocode=FTpQQQIdJfG1-CGEZy7oThTbcClZwu4GRH6FgDGEZy7oThTbcA%3BFUklQQId7-i2-CHdyDF85cgK4ykLqrc5e4ePgDHdyDF85cgK4w'><i>Directions to venue&rarr;</i></a></p>");
 
-        app.popups[0] = L.marker([37.825853, -122.230604]).addTo(map)
+        app.markers[0] = L.marker([37.825853, -122.230604]);
+        app.markers[0].addTo(map)
         	.bindPopup("<p><a href='https://maps.google.com/maps?ie=UTF8&cid=16360109484333451485&q=Piedmont+Community+Hall&gl=US&hl=en&t=h&vpsrc=6&iwloc=A&f=d&daddr=Piedmont+Community+Hall,+711+Highland+Avenue,+Oakland,+CA+94611&geocode=%3BCXqc6A_gXsJCFUklQQId7-i2-CkLqrc5e4ePgDHdyDF85cgK4w&om=1&ll=37.823993,-122.230417&spn=2.959932,0.009141&z=20'><h5>Piedmont Community Hall</h5><img src='images/piedmont-community-hall.jpg'/><br/>711 Highland Avenue<br/>Oakland, California 94611</a></p>").openPopup();
 
         var popup = L.popup();
@@ -107,6 +111,9 @@
         $('#venue').click(app.show_venue);
         $('#hotels').click(app.show_hotels);
         $('#info').click(app.show_announcement);
+        $(app.markers[1]).hover(function(){app.markers[1].openPopup();});
+        $(app.markers[2]).hover(function(){app.markers[2].openPopup();});
+        $(app.markers[3]).hover(function(){app.markers[3].openPopup();});
 
         if(document.location.hash == '#hotels'){
           app.show_hotels();
@@ -135,7 +142,7 @@
         //show map;
         $("#map_div").show();
         app.map.setView([37.872853, -122.230604], 12);
-        app.popups[0].openPopup();
+        app.markers[0].openPopup();
       };
 
       app.show_announcement = function(){
