@@ -1,12 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
   <head>
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <meta name="description" content="Ryan and Amy : Ryan Jarvinen and Amy Allen's wedding website" />
 
+    <link href="stylesheets/bootstrap.min.css" rel="stylesheet" media="screen">
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.css" />
+    <!--[if lte IE 8]>
+      <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.ie.css" />
+    <![endif]-->
 
     <title>Ryan and Amy</title>
   </head>
@@ -14,31 +19,142 @@
   <body>
 
     <!-- HEADER -->
-    <div style='display:none;' id="header_wrap" class="outer">
+    <div id="header_wrap" class="outer" style='display:none;'>
         <header class="inner">
-          <a id="forkme_banner" href="https://github.com/ryanj">View on GitHub</a>
-
-          <h1 id="project_title">Ryan and Amy</h1>
-          <h2 id="project_tagline">Ryan Jarvinen and Amy Allen's wedding website</h2>
-
+          <h1 id="project_title" style='display:none;'>Ryan and Amy</h1>
+          <h2 id="project_tagline" style='display:none;'>Ryan Jarvinen and Amy Allen's wedding website</h2>
         </header>
     </div>
 
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer" style='background:white;'>
       <section id="main_content" class="inner">
-        <p><a style='border:0px;' href='http://ryanandamy.us'><img style='border:0px;' src="images/save_the_date.png" alt="Save the Date"></a></p>
-        <p style='text-align:center;'><a style='border:0px;padding-left:20px;' href='http://www1.macys.com/registry/wedding/guest/?registryId=207758'><img style='border:0px;width:100px;' src="images/macys_bag.png" alt="Registry at Macy's"></a></p>
-        <p style='text-align:center;'><a style='border:0px;padding-left:20px;' href='http://www.target.com/wedd/registry/g1tpNFNlROUbQ96oXn2-Yg'><img style='border:0px;width:100px;' src="images/target.png" alt="Registry at Target"></a></p>
+        <div id="splash_image">
+          <p><a style='border:0px;' href='http://ryanandamy.us'><img style='border:0px;' src="images/art_announce.png" alt="Save the Date"></a></p>
+        </div>
+        <div id='menu' class='row' style='text-align:center;padding-bottom:15px;'>
+          <div class='span2'><a id='venue' href="#venue">Venue</a></div>
+          <div class='span2'><a id='hotels' href="#hotels">Hotels</a></div>
+          <div class='span2'><a id='registry' href="#registry">Registry</a></div>
+          <div class='span2'><a id='info' href="#info">Info</a></div>
+        </div>
+        <div id='page_pants' style='height:580px;width:100%;'>
+          <div style='margin-top:20px;' id="map_div">
+            <div class='row'> 
+              <div id='map_notes' class='span8'>Street parking is available</div>
+            </div>
+            <div id='map'></div>
+          </div>
+          <div id='registry_div' style='display:none;padding-top:30px;'>
+            <div class='row'> 
+              <div class='span8'>We're registered at</div>
+            </div>
+            <div class='row'> 
+              <div class='span3' style='text-align:center;'><a style='border:0px;' href='http://www1.macys.com/registry/wedding/guest/?registryId=207758'><img style='border:0px;width:100px;' src="images/macys_bag.png" alt="Registry at Macy's"><br/>Macy's</a></div>
+              <div style='padding-top:80px;' class='span2'>and</div>
+              <div class='span3' style='text-align:center;padding-top:20px;'><a style='border:0px;' href='http://www.target.com/wedd/registry/g1tpNFNlROUbQ96oXn2-Yg'><img style='border:0px;width:100px;' src="images/target.png" alt="Registry at Target"><br/>Target</a></div>
+            </div>
+          </div>
+          <div id='announcement_div' style='display:none;padding-top:20px;'>
+            <div class='row'><div class='span8'>Invitations are on the way!</div></div>
+            <div class='row'><div class='span8'><img style='border:0px;' src="images/save_the_date.png" alt="Save the Date"></div></div>
+            <div style='clear:both;'></div>
+          </div>
+        </div>
       </section>
     </div>
 
     <!-- FOOTER  -->
-    <div style="display:none;" id="footer_wrap" class="outer">
+    <div style='display:none;' id="footer_wrap" class="outer">
       <footer class="inner">
-        <p>GitHub Pages</p>
+        <a id="forkme_banner" href="https://github.com/ryanj/ryanj.github.com/"></a>
       </footer>
     </div>
+
+    <link href='http://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="javascripts/bootstrap.min.js"></script>
+    <script src="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js"></script>
+    <script>
+
+      var app = {};
+      app.page_init = function() {
+        var map = L.map('map').setView([37.859853, -122.230604], 12);
+        app.map = map;
+        app.popups = [];
+
+        L.tileLayer('http://{s}.tile.cloudmade.com/99c230b812b04b4a83492f7282a90227/71227/256/{z}/{x}/{y}.png', {
+        	maxZoom: 18,
+        	attribution: ''
+        }).addTo(map);
+
+        app.popups[3] = L.marker([37.841682,-122.293131]).addTo(map)
+        	.bindPopup("<p><a href='https://maps.google.com/maps?q=Hyatt+House+Emeryville&hl=en&ll=37.848561,-122.292509&spn=0.040801,0.059395&sll=37.841682,-122.293131&sspn=0.010201,0.014849&t=h&gl=US&hq=HYATT+house+Emeryville&z=15&iwloc=A&f=d'><h5>The Hyatt House</h5><img src='images/hyatt-house.png'/><br/>5800 Shellmound Way<br/>Emeryville, California 94608</a><br/><a href='https://maps.google.com/maps?saddr=Hyatt+House+Emeryville&daddr=Piedmont+Community+Hall,+711+Highland+Avenue,+Oakland,+CA+94611&hl=en&ll=37.832158,-122.265472&spn=0.081619,0.11879&sll=37.841682,-122.293131&sspn=0.010201,0.014849&t=m&gl=US&hq=HYATT+house+Emeryville&z=13&geocode=FRtiQQIdoPO1-CFI7xm03tBOCSmHHLVUQ36FgDFI7xm03tBOCQ%3BFUklQQId7-i2-CHdyDF85cgK4ykLqrc5e4ePgDHdyDF85cgK4w'><i>Directions to venue&rarr;</i></a><a</p>");
+
+        app.popups[2] = L.marker([37.840411,-122.29841]).addTo(map)
+        	.bindPopup("<p><a href='https://maps.google.com/maps?ie=UTF8&cid=1619372857147661514&q=Hilton+Garden+Inn+1800+Powell+Street+Emeryville+CA+94608&iwloc=A&gl=US&hl=en&z=19&f=d'><h5>The Hilton Garden Inn</h5><img src='images/hilton-garden-inn.png'/><br/>1800 Powell Street<br/>Emeryville, California 94608</a><br/><a href='https://maps.google.com/maps?saddr=Hilton+Garden+Inn+1800+Powell+Street+Emeryville+CA+94608&daddr=Piedmont+Community+Hall,+711+Highland+Avenue,+Oakland,+CA+94611&hl=en&ll=37.828633,-122.266331&spn=0.081623,0.11879&cid=1619372857147661514&gl=US&t=m&z=13&geocode=FcldQQIdCd-1-CHKHDKlCCt5Fikl4SqxWn6FgDHKHDKlCCt5Fg%3BFUklQQId7-i2-CHdyDF85cgK4ykLqrc5e4ePgDHdyDF85cgK4w'><i>Directions to venue&rarr;</i></a></p>");
+
+        app.popups[1] = L.marker([37.834751,-122.293974]).addTo(map)
+        	.bindPopup("<p><a href='https://maps.google.com/maps?hl=en&ie=UTF-8&q=Courtyard+Oakland+Emeryville+5555+Shellmound+Street+%C2%B7+Emeryville,+California+94608+USA&fb=1&gl=us&hq=Courtyard+Oakland+Emeryville+5555+Shellmound+Street+%C2%B7+Emeryville,+California+94608+USA&hnear=Courtyard+Oakland+Emeryville+5555+Shellmound+Street+%C2%B7+Emeryville,+California+94608+USA&cid=0,0,8132115881282922372&ei=F1L4UPX3KJDMigKbq4DwBw&ved=0CKYBEPwSMAM&iwloc=A&f=d&z=19'><h5>The Courtyard Marriott Hotel</h5><img src='images/marriott-courtyard.png'/><br/>5555 Shellmound Street<br/>Emeryville, California 94608</a><br/><a href='https://maps.google.com/maps?saddr=Courtyard+Oakland+Emeryville,+5555+Shellmound+Street+%C2%B7+Emeryville,+California+94608+USA&daddr=Piedmont+Community+Hall,+711+Highland+Avenue,+Oakland,+CA+94611&hl=en&ie=UTF8&ll=37.834463,-122.262383&spn=0.081617,0.11879&fb=1&gl=us&hq=Courtyard+Oakland+Emeryville+5555+Shellmound+Street+%C2%B7+Emeryville,+California+94608+USA&hnear=Courtyard+Oakland+Emeryville+5555+Shellmound+Street+%C2%B7+Emeryville,+California+94608+USA&cid=0,0,8132115881282922372&t=m&z=13&geocode=FTpQQQIdJfG1-CGEZy7oThTbcClZwu4GRH6FgDGEZy7oThTbcA%3BFUklQQId7-i2-CHdyDF85cgK4ykLqrc5e4ePgDHdyDF85cgK4w'><i>Directions to venue&rarr;</i></a></p>");
+
+        app.popups[0] = L.marker([37.825853, -122.230604]).addTo(map)
+        	.bindPopup("<p><a href='https://maps.google.com/maps?ie=UTF8&cid=16360109484333451485&q=Piedmont+Community+Hall&gl=US&hl=en&t=h&vpsrc=6&iwloc=A&f=d&daddr=Piedmont+Community+Hall,+711+Highland+Avenue,+Oakland,+CA+94611&geocode=%3BCXqc6A_gXsJCFUklQQId7-i2-CkLqrc5e4ePgDHdyDF85cgK4w&om=1&ll=37.823993,-122.230417&spn=2.959932,0.009141&z=20'><h5>Piedmont Community Hall</h5><img src='images/piedmont-community-hall.jpg'/><br/>711 Highland Avenue<br/>Oakland, California 94611</a></p>").openPopup();
+
+        var popup = L.popup();
+      
+        $('#registry').click(app.show_registry);
+        $('#venue').click(app.show_venue);
+        $('#hotels').click(app.show_hotels);
+        $('#info').click(app.show_announcement);
+
+        if(document.location.hash == '#hotels'){
+          app.show_hotels();
+        }else if(document.location.hash == '#registry'){
+          app.show_registry();
+        }else if(document.location.hash == '#info'){
+          app.show_announcement();
+        }
+      };
+     
+      app.show_hotels = function(){
+        $("#announcement_div").hide();
+        //hide registry;
+        $("#registry_div").hide();
+        //show map;
+        $("#map_div").show();
+        $('#map_notes').html("Make sure to book your hotel in advance<br/>With Cal's graduation schedule, these will fill up fast");
+        app.map.setView([37.841051,-122.295274], 15);
+      };
+
+      app.show_venue = function(){
+        $('#map_notes').html('Street parking is available');
+        $("#announcement_div").hide();
+        //hide registry;
+        $("#registry_div").hide();
+        //show map;
+        $("#map_div").show();
+        app.map.setView([37.872853, -122.230604], 12);
+        app.popups[0].openPopup();
+      };
+
+      app.show_announcement = function(){
+        $("#announcement_div").show();
+        //show registry;
+        $("#registry_div").hide();
+        //hide map;
+        $("#map_div").hide();
+      };
+      app.show_registry = function(){
+        //hide map;
+        $("#map_div").hide();
+        $("#announcement_div").hide();
+        //show registry;
+        $("#registry_div").show();
+      };
+
+      document.onload=app.page_init();
+
+    </script>
 
   </body>
 </html>

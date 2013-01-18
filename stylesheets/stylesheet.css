@@ -149,13 +149,7 @@ img {
   max-width: 739px;
   padding: 5px;
   margin: 10px 0 10px 0;
-  border: 1px solid #ebebeb;
-
-  box-shadow: 0 0 5px #ebebeb;
-  -webkit-box-shadow: 0 0 5px #ebebeb;
-  -moz-box-shadow: 0 0 5px #ebebeb;
-  -o-box-shadow: 0 0 5px #ebebeb;
-  -ms-box-shadow: 0 0 5px #ebebeb;
+  border: 0px solid #ebebeb;
 }
 
 pre, code {
@@ -280,7 +274,7 @@ Full-Width Styles
 #forkme_banner {
   display: block;
   position: absolute;
-  top:0;
+  bottom: 0;
   right: 10px;
   z-index: 10;
   padding: 10px 50px 10px 10px;
@@ -428,4 +422,40 @@ Small Device Styles
     font-size: 11px;
   }
 
+}
+
+#menu a:visited{
+color:black:
+text-decoration:none;
+}
+#menu a:hover{
+color:black:
+text-decoration:none;
+}
+#menu a {
+font-family: 'Poiret One', cursive;
+font-size:42px;
+color:black:
+text-decoration:none;
+}
+
+/*******************************************************************************
+Map Styles
+*******************************************************************************/
+
+#map 
+{ 
+  height: 500px; 
+  -webkit-border-radius: 12px; 
+          border-radius: 12px;
+  -moz-background-clip: padding; -webkit-background-clip: padding-box; background-clip: padding-box;
+}
+#map_div h5 {
+  font-family: 'Poiret One', cursive; font-size 30px;font-weight:800;
+} 
+#map_div a { 
+  font-family: 'Poiret One', cursive;font-weight:800;
+}
+#page_pants div { 
+  font-family: 'Poiret One', cursive;font-weight:600;text-align:center;
 }
